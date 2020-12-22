@@ -266,11 +266,11 @@ def sum(ls):
     """
     Sum up a list using :func:`reduce` and :func:`add`.
     """
-    return reduce_fn(add, 0)(ls)
+    return reduce(add, 0)(ls)
 
 
 def prod(ls):
     """
     Product of a list using :func:`reduce` and :func:`mul`.
     """
-    return reduce_fn(mul, 1)(ls)
+    return reduce(mul, 1)(ls)

@@ -48,7 +48,7 @@ def count(position, shape, out_index):
     """
     # assuming contiguous indexation
     q = position
-    for i in range(len(index) - 1, -1, -1):
+    for i in range(len(out_index) - 1, -1, -1):
         out_index[i] = q % shape[i]
         q = q // shape[i]
 
@@ -202,8 +202,8 @@ class TensorData:
             range(len(self.shape))
         ), f"Must give a position to each dimension. Shape: {self.shape} Order: {order}"
 
-        new_shape = [self._shape[i] for i in order]
-        new_stride = [self._strides[i] for i in order]
+        new_shape = tuple(self._shape[i] for i in order)
+        new_stride = tuple(self._strides[i] for i in order)
         return TensorData(self._storage, new_shape, new_stride)
 
 
