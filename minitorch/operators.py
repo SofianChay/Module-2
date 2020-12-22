@@ -5,38 +5,101 @@ import math
 
 
 def mul(x, y):
-    ":math:`f(x, y) = x * y`"
-    raise NotImplementedError('Need to include this file from past assignment.')
+    """
+    :math:`f(x, y) = x * y`
+
+    Args:
+        x (float): first term
+        y (float): second term
+    
+    Returns:
+        x * y
+    """
+    return x * y
+
 
 
 def id(x):
-    ":math:`f(x) = x`"
-    raise NotImplementedError('Need to include this file from past assignment.')
+    """
+    :math:`f(x) = x`
+
+    Args:
+        x (float): argument of the identity function
+    
+    Returns:
+        x
+    """
+    return x
+
 
 
 def add(x, y):
-    ":math:`f(x, y) = x + y`"
-    raise NotImplementedError('Need to include this file from past assignment.')
+    """
+    :math:`f(x, y) = x + y`
+
+    Args:
+        x (float): first term
+        y (float): second term
+
+    Return:
+         x + y
+    """
+    return x + y
 
 
 def neg(x):
-    ":math:`f(x) = -x`"
-    raise NotImplementedError('Need to include this file from past assignment.')
+    """
+    :math:`f(x) = -x`
+
+    Args:
+        x: argument of the function
+
+    Return:
+        -x
+    """
+    return - float(x)
 
 
 def lt(x, y):
-    ":math:`f(x) =` 1.0 if x is less than y else 0.0"
-    raise NotImplementedError('Need to include this file from past assignment.')
+    """
+    :math:`f(x) =` 1.0 if x is less than y else 0.0
+
+    Args:
+        x (float): first term 
+        y (float): second term 
+
+    Return:
+        1 if x < y else 0
+    """
+    return float(x < y)
+
 
 
 def eq(x, y):
-    ":math:`f(x) =` 1.0 if x is equal to y else 0.0"
-    raise NotImplementedError('Need to include this file from past assignment.')
+    """
+    :math:`f(x) =` 1.0 if x is equal to y else 0.0
+
+        Args:
+        x (float): first term 
+        y (float): second term 
+
+    Return:
+    """
+    return float(x == y)
 
 
 def max(x, y):
-    ":math:`f(x) =` x if x is greater than y else y"
-    raise NotImplementedError('Need to include this file from past assignment.')
+    """
+    :math:`f(x) =` x if x is greater than y else y
+
+            Args:
+        x (float): first term 
+        y (float): second term 
+
+    Return:
+    """
+    return x if x > y else y
+    
 
 
 def sigmoid(x):
@@ -52,12 +115,11 @@ def sigmoid(x):
     for stability.
 
     Args:
-        x (float): input
+        x (float): 
 
-    Returns:
-        float : sigmoid value
+    Return:
     """
-    raise NotImplementedError('Need to include this file from past assignment.')
+    return 1/ (1 + exp(- x))
 
 
 def relu(x):
@@ -67,17 +129,23 @@ def relu(x):
     (See `<https://en.wikipedia.org/wiki/Rectifier_(neural_networks)>`_ .)
 
     Args:
-        x (float): input
+        x (float): 
 
-    Returns:
-        float : relu value
+    Return:
     """
-    raise NotImplementedError('Need to include this file from past assignment.')
+    return x if x > 0 else 0.0
 
 
 def relu_back(x, y):
-    ":math:`f(x) =` y if x is greater than 0 else 0"
-    raise NotImplementedError('Need to include this file from past assignment.')
+    """
+    :math:`f(x) =` y if x is greater than 0 else 0
+
+    x (float): first term 
+    y (float): second term 
+
+    Return:
+    """
+    return y if x > 0 else 0.0
 
 
 EPS = 1e-6
@@ -120,13 +188,18 @@ def map(fn):
     See `<https://en.wikipedia.org/wiki/Map_(higher-order_function)>`_
 
     Args:
-        fn (one-arg function): Function from one value to one value.
+        fn (one-arg function): process one value
 
     Returns:
-        function : A function that takes a list, applies `fn` to each element, and returns a
-        new list
+        function : a function that takes a list and applies `fn` to each element
     """
-    raise NotImplementedError('Need to include this file from past assignment.')
+    def map_fn(l):
+        res = []
+        for x in l:
+          res.append(fn(x))
+        return res
+
+    return map_fn
 
 
 def negList(ls):
@@ -147,10 +220,14 @@ def zipWith(fn):
 
     Returns:
         function : takes two equally sized lists `ls1` and `ls2`, produce a new list by
-        applying fn(x, y) on each pair of elements.
+        applying fn(x, y) one each pair of elements.
 
     """
-    raise NotImplementedError('Need to include this file from past assignment.')
+    def zip_fn(l1, l2):
+        res = []
+        return map(fn)(zip(l1, l2))
+
+    return zip_fn
 
 
 def addLists(ls1, ls2):
@@ -173,15 +250,27 @@ def reduce(fn, start):
         function : function that takes a list `ls` of elements
         :math:`x_1 \ldots x_n` and computes the reduction :math:`fn(x_3, fn(x_2,
         fn(x_1, x_0)))`
+
     """
-    raise NotImplementedError('Need to include this file from past assignment.')
+    def reduce_fn(l):
+        res = fn(l[0], start)
+        for x in l[1:]:
+          res = fn(x, res)
+        
+        return res
+    
+    return reduce_fn
 
 
 def sum(ls):
-    "Sum up a list using :func:`reduce` and :func:`add`."
-    raise NotImplementedError('Need to include this file from past assignment.')
+    """
+    Sum up a list using :func:`reduce` and :func:`add`.
+    """
+    return reduce_fn(add, 0)(ls)
 
 
 def prod(ls):
-    "Product of a list using :func:`reduce` and :func:`mul`."
-    raise NotImplementedError('Need to include this file from past assignment.')
+    """
+    Product of a list using :func:`reduce` and :func:`mul`.
+    """
+    return reduce_fn(mul, 1)(ls)
