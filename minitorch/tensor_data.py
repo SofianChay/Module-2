@@ -23,9 +23,11 @@ def index_to_position(index, strides):
     Returns:
         int : position in storage
     """
+    position_in_storage = 0
+    for idx, stride in zip(index, strides):
+        position_in_storage += idx * stride
 
-    # TODO: Implement for Task 2.1.
-    raise NotImplementedError('Need to implement for Task 2.1')
+    return position_in_storage
 
 
 def count(position, shape, out_index):
@@ -44,8 +46,13 @@ def count(position, shape, out_index):
       None : Fills in `out_index`.
 
     """
-    # TODO: Implement for Task 2.1.
-    raise NotImplementedError('Need to implement for Task 2.1')
+    # assuming contiguous indexation
+    q = position
+    for i in range(len(index) - 1, -1, -1):
+        out_index[i] = q % shape[i]
+        q = q // shape[i]
+
+    return out_index
 
 
 def broadcast_index(big_index, big_shape, shape, out_index):
@@ -97,6 +104,10 @@ def strides_from_shape(shape):
 
 
 class TensorData:
+    """
+    core tensor backend
+    indexing, transposition, strides, ...
+    """
     def __init__(self, storage, shape, strides=None):
         if isinstance(storage, ndarray):
             self._storage = storage
@@ -191,8 +202,10 @@ class TensorData:
             range(len(self.shape))
         ), f"Must give a position to each dimension. Shape: {self.shape} Order: {order}"
 
-        # TODO: Implement for Task 2.1.
-        raise NotImplementedError('Need to implement for Task 2.1')
+        new_shape = [self._shape[i] for i in order]
+        new_stride = [self._strides[i] for i in order]
+        return TensorData(self._storage, new_shape, new_stride)
+
 
     def to_string(self):
         s = ""
